@@ -8,8 +8,9 @@ public class AddressBookMain {
         while (true) {
             System.out.println("\n--- Address Book  ---");
             System.out.println("1. Add New Contact");
-            System.out.println("2. Display All Contacts");
-            System.out.println("3. Exit");
+            System.out.println("2. Edit Existing Contact");
+            System.out.println("3. Display All Contacts");
+            System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
             
             int choice = scanner.nextInt();
@@ -39,10 +40,17 @@ public class AddressBookMain {
                                                      phoneNumber, email);
                     addressBook.addContact(newContact);
                     break;
-                case 2: 
-                    addressBook.displayContacts();
+                case 2: // Edit Contact
+                    System.out.print("Enter First Name to Edit: ");
+                    String editFirstName = scanner.nextLine();
+                    System.out.print("Enter Last Name to Edit: ");
+                    String editLastName = scanner.nextLine();
+                    addressBook.editContact(editFirstName, editLastName);
                     break;
                 case 3: 
+                    addressBook.displayContacts();
+                    break;
+                case 4: 
                     System.out.println("Exiting Address Book Program.");
                     scanner.close();
                     System.exit(0);
