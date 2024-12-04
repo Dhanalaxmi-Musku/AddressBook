@@ -56,6 +56,19 @@ public class AddressBook {
         System.out.println("Contact not found!");
         return false;
     }
+    public boolean deleteContact(String firstName, String lastName) {
+        for (Contact contact : contacts) {
+            if (contact.getFirstName().equalsIgnoreCase(firstName) && 
+                contact.getLastName().equalsIgnoreCase(lastName)) {
+                contacts.remove(contact);
+                System.out.println("Contact deleted successfully!");
+                return true;
+            }
+        }
+        
+        System.out.println("Contact not found!");
+        return false;
+    }
     public void displayContacts() {
         if (contacts.isEmpty()) {
             System.out.println("No contacts in the address book.");
