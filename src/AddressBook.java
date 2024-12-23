@@ -13,9 +13,14 @@ public class AddressBook {
     }
 
     public void addContact(Contact contact) {
+        if (contacts.stream().anyMatch(c -> c.equals(contact))) {
+            System.out.println("Contact already exists!");
+            return;
+        }
         contacts.add(contact);
         System.out.println("Contact added successfully!");
     }
+
     public boolean editContact(String firstName, String lastName) {
         Scanner scanner = new Scanner(System.in);
         
