@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -144,6 +149,45 @@ public class AddressBook {
                 break;
             default:
                 System.out.println("Invalid choice!");
+        }
+    }
+    public void writeContactsToFile(String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            for (Contact contact : contacts) {
+                writer.write(contact.toString());
+                writer.newLine();
+            }
+            System.out.println("Contacts written to file successfully.");
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+    }
+    public void readContactsFromFile(String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(" ");
+                
+                // Ensure there are enough parts in the array
+                if (parts.length == 8) {
+                    String firstName = parts[0];
+                    String lastName = parts[1];
+                    String address = parts[2];
+                    String city = parts[3];
+                    String state = parts[4];
+                    String zip = parts[5];
+                    String phoneNumber = parts[6];
+                    String email = parts[7];
+                    
+                    Contact contact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
+                    addContact(contact);
+                } else {
+                    System.out.println("Skipping malformed line: " + line);
+                }
+            }
+            System.out.println("Contacts read from file and added to Address Book.");
+        } catch (IOException e) {
+            System.out.println("Error reading from file: " + e.getMessage());
         }
     }
 

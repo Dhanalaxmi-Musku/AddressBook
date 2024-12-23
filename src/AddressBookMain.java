@@ -146,7 +146,9 @@ public class AddressBookMain {
 	            System.out.println("3. Delete Contact");
 	            System.out.println("4. Display Contacts");
 	            System.out.println("5. Sort the AddressBook ");
-	            System.out.println("6. Return to Main Menu");
+	            System.out.println("6. Write Contacts to File");
+	            System.out.println("7. Read Contacts from File");
+	            System.out.println("8. Return to Main Menu");
 	            System.out.print("Enter your choice: ");
 	            
 	            int choice = scanner.nextInt();
@@ -207,7 +209,17 @@ public class AddressBookMain {
 	                case 5: 
 	                	 selectedBook.displaySortedMenu();	                
 	                     break;
-	                case 6: // Return to Main Menu
+	                case 6:
+	                    System.out.print("Enter file name to write contacts: ");
+	                    String writeFileName = scanner.nextLine();
+	                    selectedBook.writeContactsToFile(writeFileName);
+	                    break;
+	                case 7:
+	                    System.out.print("Enter file name to read contacts: ");
+	                    String readFileName = scanner.nextLine();
+	                    selectedBook.readContactsFromFile(readFileName);
+	                    break;
+	                case 8: // Return to Main Menu
 	                    return;
 	                 
 	                
