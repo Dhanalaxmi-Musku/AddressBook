@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class AddressBook {
@@ -11,6 +12,10 @@ public class AddressBook {
     public String getName() {
         return name;
     }
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
 
     public void addContact(Contact contact) {
         if (contacts.stream().anyMatch(c -> c.equals(contact))) {

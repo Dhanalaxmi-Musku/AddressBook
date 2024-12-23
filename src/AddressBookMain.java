@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class AddressBookMain {
 	    Map<String, AddressBook> addressBooks = new HashMap<>();
+	    
 	    public static void main(String[] args) {
 	    	Scanner scanner = new Scanner(System.in);
 	    	AddressBookMain a=new AddressBookMain();
@@ -14,7 +15,9 @@ public class AddressBookMain {
 	            System.out.println("1. Create New Address Book");
 	            System.out.println("2. Select Address Book");
 	            System.out.println("3. List All Address Books");
-	            System.out.println("4. Exit");
+	            System.out.println("4. Search by city");
+	            System.out.println("5. Search by state");
+	            System.out.println("6. Exit");
 	            System.out.print("Enter your choice: ");
 	            
 	            int choice = scanner.nextInt();
@@ -31,9 +34,20 @@ public class AddressBookMain {
 	                    a.listAddressBooks();
 	                    break;
 	                case 4:
+	                    System.out.print("Enter city to search: ");
+	                    String searchCity = scanner.nextLine();
+	                    a.searchByCity(searchCity);
+	                    break;
+	                case 5:
+	                    System.out.print("Enter state to search: ");
+	                    String searchState = scanner.nextLine();
+	                    a.searchByState(searchState);
+	                    break;
+	                case 6:
 	                    System.out.println("Exiting Address Book System.");
 	                    scanner.close();
 	                    System.exit(0);
+	                 
 	                default:
 	                    System.out.println("Invalid choice. Please try again.");
 	            }
@@ -138,8 +152,10 @@ public class AddressBookMain {
 	                    selectedBook.displayContacts();
 	                    break;
 	                
+	                
 	                case 5: // Return to Main Menu
 	                    return;
+	                 
 	                
 	                default:
 	                    System.out.println("Invalid choice. Please try again.");
@@ -160,5 +176,19 @@ public class AddressBookMain {
 	            System.out.println(bookName);
 	        }
 	    }
+	    public void searchByCity(String city) {
+	        addressBooks.values().stream()
+	            .flatMap(book -> book.getContacts().stream())
+	            .filter(contact -> contact.getCity().equalsIgnoreCase(city))
+	            .forEach(System.out::println);
+	    }
+
+	    public void searchByState(String state) {
+	        addressBooks.values().stream()
+	            .flatMap(book -> book.getContacts().stream())
+	            .filter(contact -> contact.getState().equalsIgnoreCase(state))
+	            .forEach(System.out::println);
+	    }
 }
+	    
 
