@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 public class AddressBook {
 	private String name;
-	private ArrayList<Contact> contacts;
+	ArrayList<Contact> contacts;
     public AddressBook(String name) {
     	this.name = name;
         this.contacts = new ArrayList<>();
@@ -93,9 +94,12 @@ public class AddressBook {
         }
         
         System.out.println("Contacts in Address Book:");
-        for (Contact contact : contacts) {
-            System.out.println(contact);
-        }
+        contacts.forEach(System.out::println);
+    }
+    public void sortContactsByName() {
+        contacts.stream()
+                .sorted(Comparator.comparing(contact -> contact.getFirstName().toLowerCase()))
+                .forEach(System.out::println);
     }
 
 }
