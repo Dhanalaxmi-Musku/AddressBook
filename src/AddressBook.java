@@ -23,9 +23,10 @@ public class AddressBook {
             return;
         }
         contacts.add(contact);
+        
         System.out.println("Contact added successfully!");
     }
-
+    
     public boolean editContact(String firstName, String lastName) {
         Scanner scanner = new Scanner(System.in);
         

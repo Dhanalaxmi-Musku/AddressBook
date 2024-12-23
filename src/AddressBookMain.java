@@ -1,9 +1,31 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBookMain {
 	    Map<String, AddressBook> addressBooks = new HashMap<>();
+	    private Map<String, List<Contact>> cityDictionary = new HashMap<>();
+	    private Map<String, List<Contact>> stateDictionary = new HashMap<>();
+	    
+
+	    private void updateDictionaries(Contact contact) {
+	        cityDictionary.computeIfAbsent(contact.getCity(), k -> new ArrayList<>())
+	                      .stream()
+	                      .filter(existingContact -> existingContact.equals(contact))
+	                      .findFirst()
+	                      .ifPresentOrElse(existingContact -> {}, 
+	                                       () -> cityDictionary.get(contact.getCity()).add(contact));
+
+	        stateDictionary.computeIfAbsent(contact.getState(), k -> new ArrayList<>())
+	                       .stream()
+	                       .filter(existingContact -> existingContact.equals(contact))
+	                       .findFirst()
+	                       .ifPresentOrElse(existingContact -> {}, 
+	                                        () -> stateDictionary.get(contact.getState()).add(contact));
+	    }
+
 	    
 	    public static void main(String[] args) {
 	    	Scanner scanner = new Scanner(System.in);
@@ -17,7 +39,9 @@ public class AddressBookMain {
 	            System.out.println("3. List All Address Books");
 	            System.out.println("4. Search by city");
 	            System.out.println("5. Search by state");
-	            System.out.println("6. Exit");
+	            System.out.println("6. View Persons by City");
+	            System.out.println("7. View Persons by State");
+	            System.out.println("8. Exit");
 	            System.out.print("Enter your choice: ");
 	            
 	            int choice = scanner.nextInt();
@@ -44,6 +68,16 @@ public class AddressBookMain {
 	                    a.searchByState(searchState);
 	                    break;
 	                case 6:
+	                    System.out.print("Enter city to view persons: ");
+	                    String viewCity = scanner.nextLine();
+	                    a.viewPersonsByCity(viewCity);
+	                    break;
+	                case 7:
+	                    System.out.print("Enter state to view persons: ");
+	                    String viewState = scanner.nextLine();
+	                    a.viewPersonsByState(viewState);
+	                    break;
+	                case 8:
 	                    System.out.println("Exiting Address Book System.");
 	                    scanner.close();
 	                    System.exit(0);
@@ -130,6 +164,7 @@ public class AddressBookMain {
 	                                                     city, state, zip, 
 	                                                     phoneNumber, email);
 	                    selectedBook.addContact(newContact);
+	                    updateDictionaries(newContact);
 	                    break;
 	                
 	                case 2: // Edit Contact
@@ -137,7 +172,14 @@ public class AddressBookMain {
 	                    String editFirstName = scanner.nextLine();
 	                    System.out.print("Enter Last Name to Edit: ");
 	                    String editLastName = scanner.nextLine();
-	                    selectedBook.editContact(editFirstName, editLastName);
+	                    if (selectedBook.editContact(editFirstName, editLastName)) {
+	                        Contact updatedContact = selectedBook.getContacts().stream()
+	                                .filter(c -> c.getFirstName().equalsIgnoreCase(editFirstName) && c.getLastName().equalsIgnoreCase(editLastName))
+	                                .findFirst().orElse(null);
+	                        if (updatedContact != null) {
+	                            updateDictionaries(updatedContact);
+	                        }
+	                    }
 	                    break;
 	                
 	                case 3: // Delete Contact
@@ -188,6 +230,23 @@ public class AddressBookMain {
 	            .flatMap(book -> book.getContacts().stream())
 	            .filter(contact -> contact.getState().equalsIgnoreCase(state))
 	            .forEach(System.out::println);
+	    }
+	    
+
+	    public void viewPersonsByCity(String city) {
+	        if (cityDictionary.containsKey(city)) {
+	            cityDictionary.get(city).forEach(System.out::println);
+	        } else {
+	            System.out.println("No persons found in " + city);
+	        }
+	    }
+
+	    public void viewPersonsByState(String state) {
+	        if (stateDictionary.containsKey(state)) {
+	            stateDictionary.get(state).forEach(System.out::println);
+	        } else {
+	            System.out.println("No persons found in " + state);
+	        }
 	    }
 }
 	    
