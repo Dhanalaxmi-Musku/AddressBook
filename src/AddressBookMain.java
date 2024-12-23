@@ -41,7 +41,9 @@ public class AddressBookMain {
 	            System.out.println("5. Search by state");
 	            System.out.println("6. View Persons by City");
 	            System.out.println("7. View Persons by State");
-	            System.out.println("8. Exit");
+	            System.out.println("8. Contact count by city");
+	            System.out.println("9. Contact count by state");
+	            System.out.println("10. Exit");
 	            System.out.print("Enter your choice: ");
 	            
 	            int choice = scanner.nextInt();
@@ -78,9 +80,16 @@ public class AddressBookMain {
 	                    a.viewPersonsByState(viewState);
 	                    break;
 	                case 8:
+	                    a.getCountByCity();
+	                    break;
+	                case 9:
+	                    a.getCountByState();
+	                    break;
+	                case 10:
 	                    System.out.println("Exiting Address Book System.");
 	                    scanner.close();
 	                    System.exit(0);
+	                 
 	                 
 	                default:
 	                    System.out.println("Invalid choice. Please try again.");
@@ -247,6 +256,17 @@ public class AddressBookMain {
 	        } else {
 	            System.out.println("No persons found in " + state);
 	        }
+	    }
+	    public void getCountByCity() {
+	        System.out.println("Contact count by city:");
+	        cityDictionary.forEach((city, contacts) -> 
+	            System.out.println(city + ": " + contacts.size()));
+	    }
+
+	    public void getCountByState() {
+	        System.out.println("Contact count by state:");
+	        stateDictionary.forEach((state, contacts) -> 
+	            System.out.println(state + ": " + contacts.size()));
 	    }
 }
 	    
