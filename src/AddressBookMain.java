@@ -145,7 +145,7 @@ public class AddressBookMain {
 	            System.out.println("2. Edit Contact");
 	            System.out.println("3. Delete Contact");
 	            System.out.println("4. Display Contacts");
-	            System.out.println("5. sort the AddressBook by Person's name and display it");
+	            System.out.println("5. Sort the AddressBook ");
 	            System.out.println("6. Return to Main Menu");
 	            System.out.print("Enter your choice: ");
 	            
@@ -204,9 +204,9 @@ public class AddressBookMain {
 	                case 4: // Display Contacts
 	                    selectedBook.displayContacts();
 	                    break;
-	                case 5: selectedBook.sortContactsByName();
-	                
-	                
+	                case 5: 
+	                	 selectedBook.displaySortedMenu();	                
+	                     break;
 	                case 6: // Return to Main Menu
 	                    return;
 	                 

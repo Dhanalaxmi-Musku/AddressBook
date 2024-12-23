@@ -101,5 +101,50 @@ public class AddressBook {
                 .sorted(Comparator.comparing(contact -> contact.getFirstName().toLowerCase()))
                 .forEach(System.out::println);
     }
+    public void sortContactsByCity() {
+        contacts.stream()
+                .sorted(Comparator.comparing(contact -> contact.getCity().toLowerCase()))
+                .forEach(System.out::println);
+    }
+
+    public void sortContactsByState() {
+        contacts.stream()
+                .sorted(Comparator.comparing(contact -> contact.getState().toLowerCase()))
+                .forEach(System.out::println);
+    }
+
+    public void sortContactsByZip() {
+        contacts.stream()
+                .sorted(Comparator.comparing(contact -> contact.getZip()))
+                .forEach(System.out::println);
+    }
+    public void displaySortedMenu() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Select sorting criteria:");
+        System.out.println("1. Sort by Name");
+        System.out.println("2. Sort by City");
+        System.out.println("3. Sort by State");
+        System.out.println("4. Sort by Zip");
+        System.out.print("Enter your choice: ");
+
+        int choice = scanner.nextInt();
+        switch (choice) {
+            case 1:
+                sortContactsByName();
+                break;
+            case 2:
+                sortContactsByCity();
+                break;
+            case 3:
+                sortContactsByState();
+                break;
+            case 4:
+                sortContactsByZip();
+                break;
+            default:
+                System.out.println("Invalid choice!");
+        }
+    }
 
 }
