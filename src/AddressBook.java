@@ -3,10 +3,15 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 public class AddressBook {
 	private String name;
@@ -190,5 +195,57 @@ public class AddressBook {
             System.out.println("Error reading from file: " + e.getMessage());
         }
     }
+    public void saveToCSV(String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            for (Contact contact : contacts) {
+                writer.write(contact.toCSV());
+                writer.newLine();
+            }
+            System.out.println("Contacts saved to CSV file successfully.");
+        } catch (IOException e) {
+            System.out.println("Error writing to CSV file: " + e.getMessage());
+        }
+    }
+
+    public void loadFromCSV(String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Contact contact = Contact.fromCSV(line);
+                if (contact != null) {
+                    addContact(contact);
+                }
+            }
+            System.out.println("Contacts loaded from CSV file successfully.");
+        } catch (IOException e) {
+            System.out.println("Error reading from CSV file: " + e.getMessage());
+        }
+    }
+    public void saveToJSON(String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(contacts);
+            writer.write(json);
+            System.out.println("Contacts saved to JSON file successfully.");
+        } catch (IOException e) {
+            System.out.println("Error writing to JSON file: " + e.getMessage());
+        }
+    }
+
+    public void loadFromJSON(String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            Gson gson = new Gson();
+            Type contactListType = new TypeToken<ArrayList<Contact>>(){}.getType();
+            ArrayList<Contact> loadedContacts = gson.fromJson(reader, contactListType);
+            if (loadedContacts != null) {
+                contacts.clear();
+                contacts.addAll(loadedContacts);
+                System.out.println("Contacts loaded from JSON file successfully.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading from JSON file: " + e.getMessage());
+        }
+    }
+ 
 
 }

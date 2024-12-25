@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,9 @@ public class AddressBookMain {
 
 	    
 	    public static void main(String[] args) {
+	    	//System.out.println(System.getProperty("java.class.path"));
+	    	System.out.println("Classpath: " + System.getProperty("java.class.path"));
+
 	    	Scanner scanner = new Scanner(System.in);
 	    	AddressBookMain a=new AddressBookMain();
 		System.out.println("Welcome to Address Book Program");
@@ -149,6 +153,10 @@ public class AddressBookMain {
 	            System.out.println("6. Write Contacts to File");
 	            System.out.println("7. Read Contacts from File");
 	            System.out.println("8. Return to Main Menu");
+	            System.out.println("9. Save to CSV");
+	            System.out.println("10. Load from CSV");
+	            System.out.println("11. Save to JSON");
+	            System.out.println("12. Load from JSON");	           
 	            System.out.print("Enter your choice: ");
 	            
 	            int choice = scanner.nextInt();
@@ -221,7 +229,27 @@ public class AddressBookMain {
 	                    break;
 	                case 8: // Return to Main Menu
 	                    return;
-	                 
+	                case 9: // Save to CSV
+	                    System.out.print("Enter file name to save to CSV: ");
+	                    String csvFileName = scanner.nextLine();
+	                    selectedBook.saveToCSV(csvFileName);
+	                    break;
+	                case 10: // Load from CSV
+	                    System.out.print("Enter file name to load from CSV: ");
+	                    String loadCsvFileName = scanner.nextLine();
+	                    selectedBook.loadFromCSV(loadCsvFileName);
+	                    break;
+	                case 11: // Save to JSON
+	                    System.out.print("Enter file name to save to JSON: ");
+	                    String jsonFileName = scanner.nextLine();
+	                    selectedBook.saveToJSON(jsonFileName);
+	                    break;
+	                case 12: // Load from JSON
+	                    System.out.print("Enter file name to load from JSON: ");
+	                    String loadJsonFileName = scanner.nextLine();
+	                    selectedBook.loadFromJSON(loadJsonFileName);
+	                    break;
+
 	                
 	                default:
 	                    System.out.println("Invalid choice. Please try again.");

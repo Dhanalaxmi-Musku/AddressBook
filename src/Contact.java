@@ -100,5 +100,17 @@ public class Contact {
     public int hashCode() {
         return Objects.hash(firstName.toLowerCase(), lastName.toLowerCase());
     }
+    public String toCSV() {
+        return String.join(",", firstName, lastName, address, city, state, zip, phoneNumber, email);
+    }
+
+    public static Contact fromCSV(String csvLine) {
+        String[] fields = csvLine.split(",");
+        if (fields.length == 8) {
+            return new Contact(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7]);
+        }
+        System.out.println("Skipping malformed CSV line: " + csvLine);
+        return null;
+    }
 
 }

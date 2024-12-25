@@ -1,0 +1,32 @@
+[
+    {
+        "firstName": "John",
+        "lastName": "Doe",
+        "address": "123 Elm St",
+        "city": "Springfield",
+        "state": "Illinois",
+        "zip": "62704",
+        "phoneNumber": "555-1234",
+        "email": "john.doe@example.com"
+    },
+    {
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "address": "456 Oak St",
+        "city": "Metropolis",
+        "state": "New York",
+        "zip": "10001",
+        "phoneNumber": "555-5678",
+        "email": "jane.smith@example.com"
+    },
+    {
+        "firstName": "Alice",
+        "lastName": "Johnson",
+        "address": "789 Pine St",
+        "city": "Gotham",
+        "state": "California",
+        "zip": "90210",
+        "phoneNumber": "555-9012",
+        "email": "alice.johnson@example.com"
+    }
+]
